@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="logo">My Artbook</div>
+    <nav>
+      <ul>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Creative Journal & Portfolio</h1>
+    <p>A digital scrapbook showcasing digital artwork, sketches, and visual designs.</p>
+  </section>
+
+  <!-- Gallery Section -->
+  <main id="gallery" class="gallery-container">
+    
+    <!-- Artwork Card 1 -->
+    <div class="art-card" data-title="Artwork Title 1" data-desc="Medium: Digital Paint | 2026">
+      <img src="https://via.placeholder.com/400x500" alt="Artwork 1">
+      <div class="card-info">
+        <h3>Artwork Title 1</h3>
+        <p>Digital Illustration</p>
+      </div>
+    </div>
+
+    <!-- Artwork Card 2 -->
+    <div class="art-card" data-title="Artwork Title 2" data-desc="Medium: Soft Body Paint | 2026">
+      <img src="https://via.placeholder.com/400x400" alt="Artwork 2">
+      <div class="card-info">
+        <h3>Artwork Title 2</h3>
+        <p>Acrylic & Fabric</p>
+      </div>
+    </div>
+
+    <!-- Artwork Card 3 -->
+    <div class="art-card" data-title="Artwork Title 3" data-desc="Medium: Adobe Photoshop | 2026">
+      <img src="https://via.placeholder.com/400x600" alt="Artwork 3">
+      <div class="card-info">
+        <h3>Artwork Title 3</h3>
+        <p>Graphic Design</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal / Lightbox for viewing large images -->
+  <div id="art-modal" class="modal">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modal-img" alt="Enlarged Art">
+    <div id="modal-caption"></div>
+  </div>
+
+  <!-- About & Contact Section -->
+  <section id="about" class="about-section">
+    <h2>About the Artist</h2>
+    <p>Welcome! I create digital artwork, visual designs, and traditional media projects. This space serves as a collection of my creative explorations.</p>
+  </section>
+
+  <footer id="contact" class="footer">
+    <p>Contact: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
+    <p>&copy; 2026 Art Portfolio. All rights reserved.</p>
+  </footer>
+
+  <!-- Link JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
