@@ -13,7 +13,7 @@
     }
 
     body {
-      background-color: #12141c; /* Midnight blue background */
+      background-color: #12141c;
       color: #f0f4f8;
       height: 100vh;
       display: flex;
@@ -23,7 +23,7 @@
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* Top Minimalist Header */
+    /* Top Header */
     .app-header {
       display: flex;
       justify-content: space-between;
@@ -76,7 +76,6 @@
       transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    /* Blank Minimalist Covers */
     .sketchbook-cover {
       width: 240px;
       height: 340px;
@@ -84,7 +83,7 @@
       cursor: pointer;
       position: relative;
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-      border-left: 10px solid rgba(0, 0, 0, 0.3); /* Spine shadow */
+      border-left: 10px solid rgba(0, 0, 0, 0.3);
       transition: transform 0.4s ease, filter 0.4s ease;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -98,7 +97,6 @@
     .cover-warm { background: #25201e; }
     .cover-blue { background: #192231; }
 
-    /* Pagination Dots */
     .shelf-dots {
       display: flex;
       gap: 0.6rem;
@@ -118,32 +116,30 @@
       background: #ffffff;
     }
 
-    /* VIEW 2: A5 Open Notebook Spread Viewer */
+    /* VIEW 2: Open Notebook Viewer */
     .viewer-view {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 3000px;
+      perspective: 3500px;
     }
 
     .viewer-view.hidden {
       display: none;
     }
 
-    /* A5 Open Book Proportions */
     .book-stage {
       width: 840px;
       height: 570px;
       position: relative;
       background: #faf9f6;
       border-radius: 4px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.65);
       display: flex;
       transform-style: preserve-3d;
     }
 
-    /* Left & Right Static Background Pages */
     .page-left, .page-right {
       width: 50%;
       height: 100%;
@@ -158,33 +154,29 @@
 
     .page-left {
       left: 0;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
+      border-radius: 4px 0 0 4px;
       border-right: 1px solid #e2dfdb;
-      box-shadow: inset -15px 0 25px rgba(0, 0, 0, 0.03);
+      box-shadow: inset -18px 0 30px rgba(0, 0, 0, 0.04);
     }
 
     .page-right {
       right: 0;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-      box-shadow: inset 15px 0 25px rgba(0, 0, 0, 0.03);
+      border-radius: 0 4px 4px 0;
+      box-shadow: inset 18px 0 30px rgba(0, 0, 0, 0.04);
     }
 
-    /* Center Spine Shadow Overlay */
     .book-spine {
       position: absolute;
       left: 50%;
       top: 0;
-      width: 40px;
+      width: 50px;
       height: 100%;
       transform: translateX(-50%);
-      background: linear-gradient(to right, rgba(0,0,0,0.06), rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.06));
+      background: linear-gradient(to right, rgba(0,0,0,0.08), rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.08));
       pointer-events: none;
       z-index: 5;
     }
 
-    /* Center-Hinged Turning Page Sheet */
     .flipping-sheet {
       position: absolute;
       top: 0;
@@ -193,7 +185,7 @@
       height: 100%;
       transform-style: preserve-3d;
       transform-origin: left center;
-      transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
       z-index: 10;
       pointer-events: none;
     }
@@ -212,9 +204,22 @@
 
     .sheet-back {
       transform: rotateY(180deg);
+      background: #f4f3ef;
     }
 
-    /* Full-Page Drawing Slots */
+    .paper-shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.15), transparent 30%);
+      opacity: 0;
+      transition: opacity 0.45s ease-in-out;
+      pointer-events: none;
+      z-index: 6;
+    }
+
     .page-slot {
       width: 100%;
       height: 100%;
@@ -230,7 +235,6 @@
       object-fit: cover;
     }
 
-    /* Bottom Navigation Dock */
     .app-dock {
       display: flex;
       justify-content: center;
@@ -260,7 +264,6 @@
       transform: translateY(-2px);
     }
 
-    /* Fullscreen Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -296,14 +299,12 @@
 </head>
 <body>
 
-  <!-- Top Header -->
   <header class="app-header">
     <button class="icon-btn hidden" id="back-btn" title="Back to Shelf">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
   </header>
 
-  <!-- VIEW 1: Carousel Shelf -->
   <section id="shelf-view" class="shelf-view">
     <div class="shelf-container" id="shelf-carousel">
       <div class="sketchbook-cover cover-dark" data-book="0"></div>
@@ -318,7 +319,6 @@
     </div>
   </section>
 
-  <!-- VIEW 2: Open Notebook Viewer -->
   <main id="viewer-view" class="viewer-view hidden">
     <div class="book-stage" id="book-stage">
       <div class="page-left" id="page-left"></div>
@@ -327,11 +327,11 @@
       <div class="flipping-sheet" id="flipping-sheet">
         <div class="sheet-front" id="sheet-front"></div>
         <div class="sheet-back" id="sheet-back"></div>
+        <div class="paper-shadow" id="paper-shadow"></div>
       </div>
     </div>
   </main>
 
-  <!-- Bottom Navigation Dock -->
   <nav class="app-dock hidden" id="viewer-dock">
     <button class="dock-btn" id="prev-btn" title="Previous Page">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -341,7 +341,6 @@
     </button>
   </nav>
 
-  <!-- Fullscreen Modal -->
   <div id="image-modal" class="modal-overlay">
     <span class="close-modal">&times;</span>
     <img id="modal-img" src="" alt="Enlarged Art">
@@ -350,11 +349,8 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      // ⭐ INDEPENDENT SKETCHBOOKS & INFINITE PAGES ARRAY ⭐
-      // You can add as many pages as you want to any sketchbook below!
       const sketchbooks = [
         {
-          // Sketchbook 1 Pages
           pages: [
             "https://via.placeholder.com/600x850/e2e8f0/12141c?text=Book+1+-+Page+1",
             "https://via.placeholder.com/600x850/cbd5e1/12141c?text=Book+1+-+Page+2",
@@ -363,7 +359,6 @@
           ]
         },
         {
-          // Sketchbook 2 Pages
           pages: [
             "https://via.placeholder.com/600x850/f1f5f9/12141c?text=Book+2+-+Page+1",
             "https://via.placeholder.com/600x850/e2e8f0/12141c?text=Book+2+-+Page+2",
@@ -371,7 +366,6 @@
           ]
         },
         {
-          // Sketchbook 3 Pages
           pages: [
             "https://via.placeholder.com/600x850/cbd5e1/12141c?text=Book+3+-+Page+1",
             "https://via.placeholder.com/600x850/94a3b8/12141c?text=Book+3+-+Page+2"
@@ -396,16 +390,15 @@
       const sheetFront = document.getElementById('sheet-front');
       const sheetBack = document.getElementById('sheet-back');
       const flippingSheet = document.getElementById('flipping-sheet');
+      const paperShadow = document.getElementById('paper-shadow');
       const nextBtn = document.getElementById('next-btn');
       const prevBtn = document.getElementById('prev-btn');
 
-      // Open Sketchbook from Shelf
       document.querySelectorAll('.sketchbook-cover').forEach(card => {
         card.addEventListener('click', () => {
           const bookIdx = parseInt(card.getAttribute('data-book'));
           currentBook = sketchbooks[bookIdx];
           
-          // Ensure even number of pages for clean spreads
           if (currentBook.pages.length % 2 !== 0) {
             currentBook.pages.push("");
           }
@@ -435,10 +428,10 @@
         pageRight.innerHTML = getContentHTML(currentBook.pages[rightIdx]);
         flippingSheet.style.transition = 'none';
         flippingSheet.style.transform = 'rotateY(0deg)';
+        paperShadow.style.opacity = '0';
         bindModals();
       }
 
-      // Notebook Center-Spine Page Turning Logic
       nextBtn.addEventListener('click', () => {
         if (isAnimating || currentSpread >= totalSpreads - 1) return;
         isAnimating = true;
@@ -447,15 +440,20 @@
         const nextLeftIdx = (currentSpread + 1) * 2;
         const nextRightIdx = (currentSpread + 1) * 2 + 1;
 
-        // Set up flipping sheet faces
         sheetFront.innerHTML = getContentHTML(currentBook.pages[oldRightIdx]);
         sheetBack.innerHTML = getContentHTML(currentBook.pages[nextLeftIdx]);
 
-        // Update static pages underneath
         pageLeft.innerHTML = getContentHTML(currentBook.pages[nextLeftIdx]);
         pageRight.innerHTML = getContentHTML(currentBook.pages[nextRightIdx]);
 
-        flippingSheet.style.transition = 'transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)';
+        flippingSheet.style.transition = 'transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1)';
+        
+        paperShadow.style.transition = 'opacity 0.45s ease-in-out';
+        paperShadow.style.opacity = '1';
+        setTimeout(() => {
+          paperShadow.style.opacity = '0';
+        }, 450);
+
         flippingSheet.style.transform = 'rotateY(-180deg)';
 
         setTimeout(() => {
@@ -466,7 +464,7 @@
           sheetBack.innerHTML = '';
           isAnimating = false;
           bindModals();
-        }, 800);
+        }, 900);
       });
 
       prevBtn.addEventListener('click', () => {
@@ -477,7 +475,6 @@
         const prevRightIdx = (currentSpread - 1) * 2 + 1;
         const prevLeftIdx = (currentSpread - 1) * 2;
 
-        // Set up flipping sheet for backward turn
         sheetFront.innerHTML = getContentHTML(currentBook.pages[prevRightIdx]);
         sheetBack.innerHTML = getContentHTML(currentBook.pages[currentLeftIdx]);
 
@@ -487,8 +484,14 @@
         pageLeft.innerHTML = getContentHTML(currentBook.pages[prevLeftIdx]);
         pageRight.innerHTML = getContentHTML(currentBook.pages[prevRightIdx]);
 
+        paperShadow.style.transition = 'opacity 0.45s ease-in-out';
+        paperShadow.style.opacity = '1';
         setTimeout(() => {
-          flippingSheet.style.transition = 'transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)';
+          paperShadow.style.opacity = '0';
+        }, 450);
+
+        setTimeout(() => {
+          flippingSheet.style.transition = 'transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1)';
           flippingSheet.style.transform = 'rotateY(0deg)';
         }, 50);
 
@@ -498,7 +501,7 @@
           sheetBack.innerHTML = '';
           isAnimating = false;
           bindModals();
-        }, 850);
+        }, 950);
       });
 
       backBtn.addEventListener('click', () => {
@@ -508,7 +511,6 @@
         shelfView.classList.remove('hidden');
       });
 
-      // Carousel Dots
       dots.forEach((dot, idx) => {
         dot.addEventListener('click', () => {
           dots.forEach(d => d.classList.remove('active'));
@@ -517,7 +519,6 @@
         });
       });
 
-      // Keyboard Controls
       document.addEventListener('keydown', (e) => {
         if (!viewerView.classList.contains('hidden')) {
           if (e.key === 'ArrowRight') nextBtn.click();
@@ -526,7 +527,6 @@
         }
       });
 
-      // Lightbox Modal
       const modal = document.getElementById('image-modal');
       const modalImg = document.getElementById('modal-img');
       const closeModal = document.querySelector('.close-modal');
