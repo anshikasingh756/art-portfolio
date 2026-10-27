@@ -3,80 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Art Portfolio</title>
+  <title>My Art Scrapbook</title>
+
+  <!-- Scrapbook Fonts from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Navigation Header -->
+  <!-- Scrapbook Header / Navigation -->
   <header class="navbar">
-    <div class="logo">My Artbook</div>
+    <div class="logo">✨ My Art Journal</div>
     <nav>
       <ul>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#scrapbook-canvas" class="tab-link">Canvas</a></li>
+        <li><a href="#about" class="tab-link">About Artist</a></li>
+        <li><a href="#contact" class="tab-link">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Header -->
   <section class="hero">
-    <h1>Creative Journal & Portfolio</h1>
-    <p>A digital scrapbook showcasing digital artwork, sketches, and visual designs.</p>
+    <h1>Art Scrapbook & Gallery</h1>
+    <p>💡 <em>Tip: You can drag and reposition the photos on your page! Click any piece to enlarge.</em></p>
   </section>
 
-  <!-- Gallery Section -->
-  <main id="gallery" class="gallery-container">
+  <!-- Interactive Scrapbook Canvas Area -->
+  <main id="scrapbook-canvas" class="canvas-container">
     
-    <!-- Artwork Card 1 -->
-    <div class="art-card" data-title="Artwork Title 1" data-desc="Medium: Digital Paint | 2026">
-      <img src="images/art1.webp" alt="My Artwork">
+    <!-- Scrapbook Item 1 -->
+    <div class="art-card draggable tilt-left" data-title="Digital Illustration" data-desc="Medium: Digital Paint | 2026">
+      <div class="washi-tape tape-pink"></div>
+      <img src="https://via.placeholder.com/350x450/ffe6ea/333333?text=Artwork+1" alt="Artwork 1">
       <div class="card-info">
-        <h3>Artwork Title 1</h3>
-        <p>Digital Illustration</p>
+        <h3 class="handwritten">Sunset Dream</h3>
+        <p>Digital Sketch • 2026</p>
       </div>
     </div>
 
-    <!-- Artwork Card 2 -->
-    <div class="art-card" data-title="Artwork Title 2" data-desc="Medium: Soft Body Paint | 2026">
-      <img src="https://via.placeholder.com/400x400" alt="Artwork 2">
+    <!-- Scrapbook Item 2 -->
+    <div class="art-card draggable tilt-right" data-title="Fabric Saree Painting" data-desc="Medium: Soft Body Paint | 2026">
+      <div class="washi-tape tape-yellow"></div>
+      <img src="https://via.placeholder.com/350x350/fff4cc/333333?text=Artwork+2" alt="Artwork 2">
       <div class="card-info">
-        <h3>Artwork Title 2</h3>
-        <p>Acrylic & Fabric</p>
+        <h3 class="handwritten">Floral Saree Detail</h3>
+        <p>Acrylic & Fabric • 2026</p>
       </div>
     </div>
 
-    <!-- Artwork Card 3 -->
-    <div class="art-card" data-title="Artwork Title 3" data-desc="Medium: Adobe Photoshop | 2026">
-      <img src="https://via.placeholder.com/400x600" alt="Artwork 3">
+    <!-- Scrapbook Item 3 -->
+    <div class="art-card draggable tilt-left-small" data-title="Graphic Collage" data-desc="Medium: Adobe Photoshop | 2026">
+      <div class="washi-tape tape-blue"></div>
+      <img src="https://via.placeholder.com/350x480/e6f0ff/333333?text=Artwork+3" alt="Artwork 3">
       <div class="card-info">
-        <h3>Artwork Title 3</h3>
-        <p>Graphic Design</p>
+        <h3 class="handwritten">Grainy Gradient Concept</h3>
+        <p>Graphic Design • 2026</p>
       </div>
+    </div>
+
+    <!-- Sticker Accent Element -->
+    <div class="scrapbook-sticker draggable tilt-right-small">
+      <span class="sticker-text">✨ Favorite Work!</span>
     </div>
 
   </main>
 
-  <!-- Modal / Lightbox for viewing large images -->
+  <!-- Modal Lightbox for Viewing Large Images -->
   <div id="art-modal" class="modal">
     <span class="close-btn">&times;</span>
     <img class="modal-content" id="modal-img" alt="Enlarged Art">
     <div id="modal-caption"></div>
   </div>
 
-  <!-- About & Contact Section -->
-  <section id="about" class="about-section">
-    <h2>About the Artist</h2>
-    <p>Welcome! I create digital artwork, visual designs, and traditional media projects. This space serves as a collection of my creative explorations.</p>
+  <!-- About Section -->
+  <section id="about" class="about-section paper-note">
+    <div class="pin">📌</div>
+    <h2 class="handwritten">About the Artist</h2>
+    <p>Welcome to my interactive digital scrapbook! I love experimenting with digital artwork, traditional fabric paint, soft colors, and graphical compositions.</p>
   </section>
 
+  <!-- Footer -->
   <footer id="contact" class="footer">
-    <p>Contact: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-    <p>&copy; 2026 Art Portfolio. All rights reserved.</p>
+    <p>Get in touch: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
+    <p>&copy; 2026 Personal Artbook. Made with Scraply Vibe.</p>
   </footer>
 
-  <!-- Link JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>

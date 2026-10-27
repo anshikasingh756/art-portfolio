@@ -1,4 +1,4 @@
-/* General Reset & Fonts */
+/* Reset & Fonts */
 * {
   margin: 0;
   padding: 0;
@@ -6,134 +6,229 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f4ef; /* Soft paper tone */
-  color: #333333;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #f7f3ed;
+  /* Paper Dot Pattern Background */
+  background-image: radial-gradient(#d6cbbd 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  color: #3b3735;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Navbar */
+.handwritten {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* Scrapbook Header */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1.2rem 2.5rem;
   background-color: #ffffff;
   border-bottom: 2px dashed #d1c7b7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .navbar .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-family: 'Caveat', cursive;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #4a3e3d;
 }
 
 .navbar ul {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
-.navbar a {
+.tab-link {
   text-decoration: none;
-  color: #555555;
-  font-weight: 500;
-  transition: color 0.3s;
+  font-weight: 600;
+  color: #665b57;
+  padding: 6px 14px;
+  background: #f0eae1;
+  border-radius: 12px 12px 4px 4px;
+  border: 1px solid #dcd4c8;
+  transition: all 0.2s ease;
 }
 
-.navbar a:hover {
-  color: #000000;
+.tab-link:hover {
+  background: #e3d9cc;
+  color: #222;
+  transform: translateY(-2px);
 }
 
 /* Hero Section */
 .hero {
   text-align: center;
-  padding: 4rem 2rem 2rem 2rem;
+  padding: 3rem 1.5rem 1rem 1.5rem;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-family: 'Caveat', cursive;
+  font-size: 3.2rem;
+  color: #3a322f;
 }
 
 .hero p {
-  color: #666666;
-  font-size: 1.1rem;
+  color: #70635e;
+  font-size: 1rem;
 }
 
-/* Gallery Container (Grid Layout) */
-.gallery-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+/* Scrapbook Canvas Area */
+.canvas-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
+  padding: 3rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  min-height: 600px;
 }
 
-/* Artwork Card Styling (Paper/Scrapbook polaroid look) */
+/* Polaroid / Photo Card */
 .art-card {
+  position: relative;
   background: #ffffff;
-  padding: 12px;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  border: 1px solid #e0e0e0;
+  padding: 14px 14px 24px 14px;
+  border-radius: 3px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 320px;
+  border: 1px solid #eae2d8;
 }
 
-.art-card:hover {
-  transform: translateY(-6px) rotate(1deg); /* Slight paper lift effect */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.art-card:active {
+  cursor: grabbing;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.22);
+  z-index: 100 !important;
 }
 
 .art-card img {
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
   border-radius: 2px;
-  display: block;
+  border: 1px solid #f0ebe4;
+  pointer-events: none;
 }
 
 .card-info {
-  padding-top: 10px;
+  padding-top: 12px;
   text-align: center;
-}
-
-.card-info h3 {
-  font-size: 1.1rem;
-  margin-bottom: 4px;
 }
 
 .card-info p {
   font-size: 0.85rem;
-  color: #777777;
+  color: #887a74;
 }
 
-/* Modal / Lightbox Overlay */
+/* Polaroid Rotations for Organic Layout */
+.tilt-left { transform: rotate(-4deg); }
+.tilt-right { transform: rotate(3deg); }
+.tilt-left-small { transform: rotate(-2deg); }
+.tilt-right-small { transform: rotate(5deg); }
+
+.art-card:hover {
+  transform: scale(1.03) rotate(0deg);
+  z-index: 10;
+}
+
+/* Washi Tape Strip Styling */
+.washi-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 110px;
+  height: 26px;
+  opacity: 0.85;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 2;
+  border-left: 2px dashed rgba(255,255,255,0.5);
+  border-right: 2px dashed rgba(255,255,255,0.5);
+}
+
+.tape-pink { background-color: #f7a8b8; }
+.tape-yellow { background-color: #fce38a; }
+.tape-blue { background-color: #95e1d3; }
+
+/* Sticker Element */
+.scrapbook-sticker {
+  background: #ffeb99;
+  border: 2px dashed #e6c200;
+  padding: 10px 18px;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  cursor: grab;
+  user-select: none;
+}
+
+.sticker-text {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #5c4d00;
+}
+
+/* Paper Note (About Section) */
+.about-section {
+  position: relative;
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: #fffdf9;
+  border: 1px solid #ebd8c3;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.pin {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.6rem;
+}
+
+/* Modal Lightbox Overlay */
 .modal {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(30, 25, 23, 0.85);
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
 .modal-content {
-  max-width: 80%;
+  max-width: 85%;
   max-height: 80%;
   border-radius: 4px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 
 #modal-caption {
-  color: #ffffff;
+  color: #f7f4ef;
   margin-top: 15px;
   text-align: center;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .close-btn {
@@ -146,22 +241,11 @@ body {
   cursor: pointer;
 }
 
-/* About & Footer */
-.about-section {
-  max-width: 800px;
-  margin: 4rem auto 2rem auto;
-  padding: 2rem;
-  text-align: center;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
 .footer {
   text-align: center;
   padding: 2rem;
   font-size: 0.9rem;
-  color: #777777;
-  border-top: 1px solid #e5e5e5;
+  color: #8c7e77;
+  border-top: 1px dashed #d6cbbd;
   margin-top: 3rem;
 }
