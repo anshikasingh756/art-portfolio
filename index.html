@@ -3,90 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Art Sketchbook</title>
+  <title>Illustrations - Sketchbook</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Notebook Header -->
-  <header class="navbar">
-    <div class="logo">📖 My Digital Sketchbook</div>
-    <div class="book-controls">
-      <button id="prev-btn" class="notebook-tab">&larr; Previous Page</button>
-      <span id="page-indicator" class="handwritten">Page 1 of 2</span>
-      <button id="next-btn" class="notebook-tab">Next Page &rarr;</button>
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <button class="icon-btn" id="menu-btn" title="Library">📁</button>
+      <div class="title-info">
+        <h1 id="book-title">Illustrations</h1>
+        <span id="page-counter">14 Pages</span>
+      </div>
+    </div>
+    
+    <div class="header-right">
+      <button class="icon-btn" title="Share">📤</button>
+      <button class="icon-btn" title="Add Page">➕</button>
+      <button class="icon-btn" title="More Options">•••</button>
     </div>
   </header>
 
-  <!-- Sketchbook Wrapper -->
-  <main class="sketchbook-container">
+  <!-- Sketchbook Spread View -->
+  <main class="sketchbook-view">
     
-    <!-- PAGE 1: Digital & Concept Art -->
-    <section class="notebook-page active-page" id="page-1">
-      <div class="page-header">
-        <h2 class="handwritten">Volume I: Digital & Concepts</h2>
-      </div>
-      <div class="page-grid">
-        <div class="art-card tilt-left" data-title="Sunset Dream" data-desc="Medium: Digital Paint | 2026">
-          <div class="washi-tape tape-pink"></div>
-          <img src="https://via.placeholder.com/350x450/ffe6ea/333333?text=Artwork+1" alt="Artwork 1">
-          <div class="card-info">
-            <h3 class="handwritten">Sunset Dream</h3>
-            <p>Digital Illustration</p>
-          </div>
+    <!-- PAGE 1: Characters & Cute Doodles -->
+    <div class="sketchbook-page active" data-page="1">
+      <div class="art-grid">
+        <div class="art-item" data-title="Crown Frog & Friends" data-desc="Characters & Little Doodles">
+          <img src="https://via.placeholder.com/400x400/ffd1dc/333333?text=Frog+&+Turtle" alt="Art 1">
+          <div class="caption">"I don't care!!"</div>
         </div>
+        <div class="art-item" data-title="Popsicle & Food Cuties" data-desc="Summer Sticker Sheet">
+          <img src="https://via.placeholder.com/400x400/fff3b0/333333?text=Cute+Popsicles" alt="Art 2">
+          <div class="caption">"Don't be boring!"</div>
+        </div>
+      </div>
+    </div>
 
-        <div class="art-card tilt-right" data-title="Grainy Gradient" data-desc="Medium: Adobe Photoshop | 2026">
-          <div class="washi-tape tape-blue"></div>
-          <img src="https://via.placeholder.com/350x480/e6f0ff/333333?text=Artwork+2" alt="Artwork 2">
-          <div class="card-info">
-            <h3 class="handwritten">Gradient Concept</h3>
-            <p>Graphic Design</p>
-          </div>
+    <!-- PAGE 2: Green Boy & Frog -->
+    <div class="sketchbook-page" data-page="2">
+      <div class="art-grid">
+        <div class="art-item" data-title="Frog Companion" data-desc="Green Theme Illustration">
+          <img src="https://via.placeholder.com/400x400/caffbf/333333?text=Green+Boy" alt="Art 3">
+          <div class="caption">"Do what makes you happy"</div>
+        </div>
+        <div class="art-item" data-title="Little Critters" data-desc="Sketches & Forest Friends">
+          <img src="https://via.placeholder.com/400x400/9bf6ff/333333?text=Critters" alt="Art 4">
+          <div class="caption">"Keep growing"</div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- PAGE 2: Traditional & Textile Art -->
-    <section class="notebook-page" id="page-2">
-      <div class="page-header">
-        <h2 class="handwritten">Volume II: Traditional & Fabric</h2>
-      </div>
-      <div class="page-grid">
-        <div class="art-card tilt-right-small" data-title="Fabric Saree Painting" data-desc="Medium: Soft Body Paint | 2026">
-          <div class="washi-tape tape-yellow"></div>
-          <img src="https://via.placeholder.com/350x350/fff4cc/333333?text=Artwork+3" alt="Artwork 3">
-          <div class="card-info">
-            <h3 class="handwritten">Floral Saree Detail</h3>
-            <p>Acrylic & Fabric</p>
-          </div>
+    <!-- PAGE 3: Dragons & Creatures -->
+    <div class="sketchbook-page" data-page="3">
+      <div class="art-grid">
+        <div class="art-item" data-title="Friendly Dragon" data-desc="Fantasy Creature Concept">
+          <img src="https://via.placeholder.com/400x400/bdb2ff/333333?text=Dragon" alt="Art 5">
+          <div class="caption">"Mythical Friends"</div>
+        </div>
+        <div class="art-item" data-title="Doodle Monster" data-desc="Pattern & Line Study">
+          <img src="https://via.placeholder.com/400x400/ffc6ff/333333?text=Monsters" alt="Art 6">
+          <div class="caption">"Hello!"</div>
         </div>
       </div>
-      
-      <!-- About inside the notebook back page -->
-      <div class="about-note">
-        <h3 class="handwritten">About the Creator</h3>
-        <p>Exploring the intersection of digital computer science concepts and traditional hands-on art media.</p>
-      </div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- Modal Lightbox -->
-  <div id="art-modal" class="modal">
-    <span class="close-btn">&times;</span>
-    <img class="modal-content" id="modal-img" alt="Enlarged Art">
-    <div id="modal-caption"></div>
-  </div>
+  <!-- Bottom App Navigation Bar -->
+  <nav class="app-dock">
+    <button class="dock-btn" id="prev-page-btn" title="Previous Page">⬅️</button>
+    <button class="dock-btn" id="thumbs-btn" title="Grid View">🗂️</button>
+    <button class="dock-btn" id="add-item-btn" title="New Page">➕</button>
+    <button class="dock-btn" id="next-page-btn" title="Next Page">➡️</button>
+  </nav>
 
-  <footer class="footer">
-    <p>&copy; 2026 Art Sketchbook • Built with GitHub Pages</p>
-  </footer>
+  <!-- Lightbox Modal -->
+  <div id="modal" class="modal-overlay">
+    <span class="close-modal">&times;</span>
+    <img id="modal-img" src="" alt="Zoomed Art">
+    <div id="modal-text">
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

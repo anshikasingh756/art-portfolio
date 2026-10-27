@@ -1,69 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-  // 1. Page Turning Logic
-  const pages = document.querySelectorAll('.notebook-page');
-  const nextBtn = document.getElementById('next-btn');
-  const prevBtn = document.getElementById('prev-btn');
-  const pageIndicator = document.getElementById('page-indicator');
+  const pages = document.querySelectorAll('.sketchbook-page');
+  const nextBtn = document.getElementById('next-page-btn');
+  const prevBtn = document.getElementById('prev-page-btn');
+  const pageCounter = document.getElementById('page-counter');
   
-  let currentPage = 0;
+  let currentIndex = 0;
   const totalPages = pages.length;
 
-  function updateBook() {
-    pages.forEach((page, index) => {
-      if (index === currentPage) {
-        page.classList.add('active-page');
+  function showPage(index) {
+    pages.forEach((page, i) => {
+      if (i === index) {
+        page.classList.add('active');
       } else {
-        page.classList.remove('active-page');
+        page.classList.remove('active');
       }
     });
-    pageIndicator.textContent = `Page ${currentPage + 1} of ${totalPages}`;
-    
-    // Disable/Enable buttons contextually
-    prevBtn.style.opacity = currentPage === 0 ? '0.5' : '1';
-    nextBtn.style.opacity = currentPage === totalPages - 1 ? '0.5' : '1';
+    pageCounter.textContent = `Page ${index + 1} of ${totalPages} Spreads`;
   }
 
   nextBtn.addEventListener('click', () => {
-    if (currentPage < totalPages - 1) {
-      currentPage++;
-      updateBook();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    currentIndex = (currentIndex + 1) % totalPages;
+    showPage(currentIndex);
   });
 
   prevBtn.addEventListener('click', () => {
-    if (currentPage > 0) {
-      currentPage--;
-      updateBook();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    currentIndex = (currentIndex - 1 + totalPages) % totalPages;
+    showPage(currentIndex);
   });
 
-  updateBook(); // Initialize first page view
-
-  // 2. Lightbox Modal Logic
-  const artCards = document.querySelectorAll('.art-card');
-  const modal = document.getElementById('art-modal');
+  // Lightbox Modal
+  const modal = document.getElementById('modal');
   const modalImg = document.getElementById('modal-img');
-  const modalCaption = document.getElementById('modal-caption');
-  const closeBtn = document.querySelector('.close-btn');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDesc = document.getElementById('modal-desc');
+  const closeModal = document.querySelector('.close-modal');
 
-  artCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const img = card.querySelector('img');
-      const title = card.getAttribute('data-title') || '';
-      const desc = card.getAttribute('data-desc') || '';
+  document.querySelectorAll('.art-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      const title = item.getAttribute('data-title');
+      const desc = item.getAttribute('data-desc');
 
       modal.style.display = 'flex';
       modalImg.src = img.src;
-      modalCaption.innerHTML = `<h2 class="handwritten" style="font-size: 2rem;">${title}</h2><p>${desc}</p>`;
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
     });
   });
 
-  closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.style.display = 'none';
+  closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
   });
 
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
 });
