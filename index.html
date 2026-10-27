@@ -124,75 +124,93 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 2500px;
+      perspective: 3000px;
     }
 
     .viewer-view.hidden {
       display: none;
     }
 
-    /* A5 Open Book Proportions (Width: ~840px, Height: ~580px) */
+    /* A5 Open Book Proportions */
     .book-stage {
       width: 840px;
       height: 570px;
       position: relative;
-      transform-style: preserve-3d;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-      background: #dfded9;
+      background: #faf9f6;
       border-radius: 4px;
-    }
-
-    .book-3d {
-      width: 100%;
-      height: 100%;
-      position: relative;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      display: flex;
       transform-style: preserve-3d;
     }
 
-    /* 3D Double-Page Spread Leaf */
-    .page-leaf {
-      position: absolute;
-      width: 100%;
+    /* Left & Right Static Background Pages */
+    .page-left, .page-right {
+      width: 50%;
       height: 100%;
+      position: absolute;
+      top: 0;
+      background: #faf9f6;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .page-left {
+      left: 0;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-right: 1px solid #e2dfdb;
+      box-shadow: inset -15px 0 25px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-right {
       right: 0;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      box-shadow: inset 15px 0 25px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Center Spine Shadow Overlay */
+    .book-spine {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 40px;
+      height: 100%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, rgba(0,0,0,0.06), rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.06));
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Center-Hinged Turning Page Sheet */
+    .flipping-sheet {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
       transform-style: preserve-3d;
       transform-origin: left center;
       transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      z-index: 10;
+      pointer-events: none;
     }
 
-    .page-leaf.flipped {
-      transform: rotateY(-180deg);
-    }
-
-    .page-side {
+    .sheet-front, .sheet-back {
       position: absolute;
-      width: 50%;
+      width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      background-color: #faf9f6; /* Clean drawing paper white */
-      top: 0;
+      background: #faf9f6;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .page-side.left {
-      left: 0;
-      border-right: 1px solid #e0dfdc;
-      box-shadow: inset -12px 0 20px rgba(0,0,0,0.03); /* Center binding shadow */
-    }
-
-    .page-side.right {
-      right: 0;
-      box-shadow: inset 12px 0 20px rgba(0,0,0,0.03); /* Center binding shadow */
-    }
-
-    .page-side.back-left {
-      left: 0;
-      transform: rotateY(180deg);
-      border-right: 1px solid #e0dfdc;
-    }
-
-    .page-side.back-right {
-      right: 0;
+    .sheet-back {
       transform: rotateY(180deg);
     }
 
@@ -285,7 +303,7 @@
     </button>
   </header>
 
-  <!-- VIEW 1: Shelf Carousel -->
+  <!-- VIEW 1: Carousel Shelf -->
   <section id="shelf-view" class="shelf-view">
     <div class="shelf-container" id="shelf-carousel">
       <div class="sketchbook-cover cover-dark" data-book="0"></div>
@@ -302,20 +320,13 @@
 
   <!-- VIEW 2: Open Notebook Viewer -->
   <main id="viewer-view" class="viewer-view hidden">
-    <div class="book-stage">
-      <div class="book-3d" id="book-3d">
-        
-        <!-- 
-          ⭐ ADD ANY AMOUNT OF PAGES YOU WANT HERE! ⭐
-          Every 2 pages form a complete open notebook spread (Left page & Right page).
-        -->
-        <div class="page"><img src="https://via.placeholder.com/600x850/ffffff/12141c?text=Page+1" alt="Page 1"></div>
-        <div class="page"><img src="https://via.placeholder.com/600x850/f7f6f2/12141c?text=Page+2" alt="Page 2"></div>
-        <div class="page"><img src="https://via.placeholder.com/600x850/ffffff/12141c?text=Page+3" alt="Page 3"></div>
-        <div class="page"><img src="https://via.placeholder.com/600x850/f7f6f2/12141c?text=Page+4" alt="Page 4"></div>
-        <!-- To add more pages, simply add: -->
-        <!-- <div class="page"><img src="your-image.jpg" alt="Page"></div> -->
-
+    <div class="book-stage" id="book-stage">
+      <div class="page-left" id="page-left"></div>
+      <div class="book-spine"></div>
+      <div class="page-right" id="page-right"></div>
+      <div class="flipping-sheet" id="flipping-sheet">
+        <div class="sheet-front" id="sheet-front"></div>
+        <div class="sheet-back" id="sheet-back"></div>
       </div>
     </div>
   </main>
@@ -339,23 +350,71 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      let currentLeafIdx = 0;
-      let totalLeaves = 0;
+      // ⭐ INDEPENDENT SKETCHBOOKS & INFINITE PAGES ARRAY ⭐
+      // You can add as many pages as you want to any sketchbook below!
+      const sketchbooks = [
+        {
+          // Sketchbook 1 Pages
+          pages: [
+            "https://via.placeholder.com/600x850/e2e8f0/12141c?text=Book+1+-+Page+1",
+            "https://via.placeholder.com/600x850/cbd5e1/12141c?text=Book+1+-+Page+2",
+            "https://via.placeholder.com/600x850/94a3b8/12141c?text=Book+1+-+Page+3",
+            "https://via.placeholder.com/600x850/64748b/12141c?text=Book+1+-+Page+4"
+          ]
+        },
+        {
+          // Sketchbook 2 Pages
+          pages: [
+            "https://via.placeholder.com/600x850/f1f5f9/12141c?text=Book+2+-+Page+1",
+            "https://via.placeholder.com/600x850/e2e8f0/12141c?text=Book+2+-+Page+2",
+            "https://via.placeholder.com/600x850/cbd5e1/12141c?text=Book+2+-+Page+3"
+          ]
+        },
+        {
+          // Sketchbook 3 Pages
+          pages: [
+            "https://via.placeholder.com/600x850/cbd5e1/12141c?text=Book+3+-+Page+1",
+            "https://via.placeholder.com/600x850/94a3b8/12141c?text=Book+3+-+Page+2"
+          ]
+        }
+      ];
+
+      let currentBook = null;
+      let currentSpread = 0;
+      let totalSpreads = 0;
+      let isAnimating = false;
 
       const shelfView = document.getElementById('shelf-view');
       const viewerView = document.getElementById('viewer-view');
       const viewerDock = document.getElementById('viewer-dock');
       const backBtn = document.getElementById('back-btn');
-      const book3d = document.getElementById('book-3d');
-      const nextBtn = document.getElementById('next-btn');
-      const prevBtn = document.getElementById('prev-btn');
       const shelfCarousel = document.getElementById('shelf-carousel');
       const dots = document.querySelectorAll('.dot');
+      
+      const pageLeft = document.getElementById('page-left');
+      const pageRight = document.getElementById('page-right');
+      const sheetFront = document.getElementById('sheet-front');
+      const sheetBack = document.getElementById('sheet-back');
+      const flippingSheet = document.getElementById('flipping-sheet');
+      const nextBtn = document.getElementById('next-btn');
+      const prevBtn = document.getElementById('prev-btn');
 
-      // Open Sketchbook
+      // Open Sketchbook from Shelf
       document.querySelectorAll('.sketchbook-cover').forEach(card => {
         card.addEventListener('click', () => {
-          buildNotebookSpreads();
+          const bookIdx = parseInt(card.getAttribute('data-book'));
+          currentBook = sketchbooks[bookIdx];
+          
+          // Ensure even number of pages for clean spreads
+          if (currentBook.pages.length % 2 !== 0) {
+            currentBook.pages.push("");
+          }
+
+          totalSpreads = currentBook.pages.length / 2;
+          currentSpread = 0;
+
+          updateSpreadDisplay();
+
           shelfView.classList.add('hidden');
           viewerView.classList.remove('hidden');
           viewerDock.classList.remove('hidden');
@@ -363,96 +422,83 @@
         });
       });
 
-      // Build 3D Notebook Spreads from HTML elements
-      function buildNotebookSpreads() {
-        const rawPages = Array.from(book3d.querySelectorAll('.page'));
-        book3d.innerHTML = '';
-
-        // Each leaf consists of 2 pages (Left & Right when open)
-        totalLeaves = Math.ceil(rawPages.length / 2);
-
-        for (let i = 0; i < totalLeaves; i++) {
-          const leaf = document.createElement('div');
-          leaf.className = 'page-leaf';
-          leaf.style.zIndex = totalLeaves - i;
-
-          const leftContent = rawPages[i * 2] ? rawPages[i * 2].innerHTML : '';
-          const rightContent = rawPages[i * 2 + 1] ? rawPages[i * 2 + 1].innerHTML : '';
-
-          leaf.innerHTML = `
-            <div class="page-side left">
-              ${leftContent ? `<div class="page-slot">${leftContent}</div>` : ''}
-            </div>
-            <div class="page-side right">
-              ${rightContent ? `<div class="page-slot">${rightContent}</div>` : ''}
-            </div>
-            <div class="page-side back-left"></div>
-            <div class="page-side back-right">
-              <!-- Back sides of turning pages can hold subsequent left pages if needed, structured for notebook flow -->
-            </div>
-          `;
-
-          book3d.appendChild(leaf);
-        }
-
-        // Refined multi-leaf sequential layout for notebook turning
-        rebuildSpreadDom(rawPages);
+      function getContentHTML(src) {
+        if (!src) return '';
+        return `<div class="page-slot"><img src="${src}" alt="Drawing"></div>`;
       }
 
-      function rebuildSpreadDom(rawPages) {
-        book3d.innerHTML = '';
-        totalLeaves = Math.ceil(rawPages.length / 2);
+      function updateSpreadDisplay() {
+        const leftIdx = currentSpread * 2;
+        const rightIdx = currentSpread * 2 + 1;
 
-        for (let i = 0; i < totalLeaves; i++) {
-          const leaf = document.createElement('div');
-          leaf.className = 'page-leaf';
-          leaf.style.zIndex = totalLeaves - i;
-
-          const frontLeft = rawPages[i * 2] ? rawPages[i * 2].innerHTML : '';
-          const frontRight = rawPages[i * 2 + 1] ? rawPages[i * 2 + 1].innerHTML : '';
-          const backLeft = rawPages[(i + 1) * 2] ? rawPages[(i + 1) * 2].innerHTML : '';
-          const backRight = rawPages[(i + 1) * 2 + 1] ? rawPages[(i + 1) * 2 + 1].innerHTML : '';
-
-          leaf.innerHTML = `
-            <div class="page-side left"><div class="page-slot">${frontLeft}</div></div>
-            <div class="page-side right"><div class="page-slot">${frontRight}</div></div>
-            <div class="page-side back-left"><div class="page-slot">${backLeft}</div></div>
-            <div class="page-side back-right"><div class="page-slot">${backRight}</div></div>
-          `;
-
-          book3d.appendChild(leaf);
-        }
-
-        currentLeafIdx = 0;
-        updatePageFlips();
+        pageLeft.innerHTML = getContentHTML(currentBook.pages[leftIdx]);
+        pageRight.innerHTML = getContentHTML(currentBook.pages[rightIdx]);
+        flippingSheet.style.transition = 'none';
+        flippingSheet.style.transform = 'rotateY(0deg)';
         bindModals();
       }
 
-      function updatePageFlips() {
-        const leaves = book3d.querySelectorAll('.page-leaf');
-        leaves.forEach((leaf, idx) => {
-          if (idx < currentLeafIdx) {
-            leaf.classList.add('flipped');
-            leaf.style.zIndex = idx + 1;
-          } else {
-            leaf.classList.remove('flipped');
-            leaf.style.zIndex = totalLeaves - idx;
-          }
-        });
-      }
-
+      // Notebook Center-Spine Page Turning Logic
       nextBtn.addEventListener('click', () => {
-        if (currentLeafIdx < totalLeaves - 1) {
-          currentLeafIdx++;
-          updatePageFlips();
-        }
+        if (isAnimating || currentSpread >= totalSpreads - 1) return;
+        isAnimating = true;
+
+        const oldRightIdx = currentSpread * 2 + 1;
+        const nextLeftIdx = (currentSpread + 1) * 2;
+        const nextRightIdx = (currentSpread + 1) * 2 + 1;
+
+        // Set up flipping sheet faces
+        sheetFront.innerHTML = getContentHTML(currentBook.pages[oldRightIdx]);
+        sheetBack.innerHTML = getContentHTML(currentBook.pages[nextLeftIdx]);
+
+        // Update static pages underneath
+        pageLeft.innerHTML = getContentHTML(currentBook.pages[nextLeftIdx]);
+        pageRight.innerHTML = getContentHTML(currentBook.pages[nextRightIdx]);
+
+        flippingSheet.style.transition = 'transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)';
+        flippingSheet.style.transform = 'rotateY(-180deg)';
+
+        setTimeout(() => {
+          currentSpread++;
+          flippingSheet.style.transition = 'none';
+          flippingSheet.style.transform = 'rotateY(0deg)';
+          sheetFront.innerHTML = '';
+          sheetBack.innerHTML = '';
+          isAnimating = false;
+          bindModals();
+        }, 800);
       });
 
       prevBtn.addEventListener('click', () => {
-        if (currentLeafIdx > 0) {
-          currentLeafIdx--;
-          updatePageFlips();
-        }
+        if (isAnimating || currentSpread <= 0) return;
+        isAnimating = true;
+
+        const currentLeftIdx = currentSpread * 2;
+        const prevRightIdx = (currentSpread - 1) * 2 + 1;
+        const prevLeftIdx = (currentSpread - 1) * 2;
+
+        // Set up flipping sheet for backward turn
+        sheetFront.innerHTML = getContentHTML(currentBook.pages[prevRightIdx]);
+        sheetBack.innerHTML = getContentHTML(currentBook.pages[currentLeftIdx]);
+
+        flippingSheet.style.transition = 'none';
+        flippingSheet.style.transform = 'rotateY(-180deg)';
+
+        pageLeft.innerHTML = getContentHTML(currentBook.pages[prevLeftIdx]);
+        pageRight.innerHTML = getContentHTML(currentBook.pages[prevRightIdx]);
+
+        setTimeout(() => {
+          flippingSheet.style.transition = 'transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)';
+          flippingSheet.style.transform = 'rotateY(0deg)';
+        }, 50);
+
+        setTimeout(() => {
+          currentSpread--;
+          sheetFront.innerHTML = '';
+          sheetBack.innerHTML = '';
+          isAnimating = false;
+          bindModals();
+        }, 850);
       });
 
       backBtn.addEventListener('click', () => {
