@@ -3,93 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Art Scrapbook</title>
-
-  <!-- Scrapbook Fonts from Google Fonts -->
+  <title>My Art Sketchbook</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Scrapbook Header / Navigation -->
+  <!-- Notebook Header -->
   <header class="navbar">
-    <div class="logo">✨ My Art Journal</div>
-    <nav>
-      <ul>
-        <li><a href="#scrapbook-canvas" class="tab-link">Canvas</a></li>
-        <li><a href="#about" class="tab-link">About Artist</a></li>
-        <li><a href="#contact" class="tab-link">Contact</a></li>
-      </ul>
-    </nav>
+    <div class="logo">📖 My Digital Sketchbook</div>
+    <div class="book-controls">
+      <button id="prev-btn" class="notebook-tab">&larr; Previous Page</button>
+      <span id="page-indicator" class="handwritten">Page 1 of 2</span>
+      <button id="next-btn" class="notebook-tab">Next Page &rarr;</button>
+    </div>
   </header>
 
-  <!-- Hero Header -->
-  <section class="hero">
-    <h1>Art Scrapbook & Gallery</h1>
-    <p>💡 <em>Tip: You can drag and reposition the photos on your page! Click any piece to enlarge.</em></p>
-  </section>
-
-  <!-- Interactive Scrapbook Canvas Area -->
-  <main id="scrapbook-canvas" class="canvas-container">
+  <!-- Sketchbook Wrapper -->
+  <main class="sketchbook-container">
     
-    <!-- Scrapbook Item 1 -->
-    <div class="art-card draggable tilt-left" data-title="Digital Illustration" data-desc="Medium: Digital Paint | 2026">
-      <div class="washi-tape tape-pink"></div>
-      <img src="https://via.placeholder.com/350x450/ffe6ea/333333?text=Artwork+1" alt="Artwork 1">
-      <div class="card-info">
-        <h3 class="handwritten">Sunset Dream</h3>
-        <p>Digital Sketch • 2026</p>
+    <!-- PAGE 1: Digital & Concept Art -->
+    <section class="notebook-page active-page" id="page-1">
+      <div class="page-header">
+        <h2 class="handwritten">Volume I: Digital & Concepts</h2>
       </div>
-    </div>
+      <div class="page-grid">
+        <div class="art-card tilt-left" data-title="Sunset Dream" data-desc="Medium: Digital Paint | 2026">
+          <div class="washi-tape tape-pink"></div>
+          <img src="https://via.placeholder.com/350x450/ffe6ea/333333?text=Artwork+1" alt="Artwork 1">
+          <div class="card-info">
+            <h3 class="handwritten">Sunset Dream</h3>
+            <p>Digital Illustration</p>
+          </div>
+        </div>
 
-    <!-- Scrapbook Item 2 -->
-    <div class="art-card draggable tilt-right" data-title="Fabric Saree Painting" data-desc="Medium: Soft Body Paint | 2026">
-      <div class="washi-tape tape-yellow"></div>
-      <img src="https://via.placeholder.com/350x350/fff4cc/333333?text=Artwork+2" alt="Artwork 2">
-      <div class="card-info">
-        <h3 class="handwritten">Floral Saree Detail</h3>
-        <p>Acrylic & Fabric • 2026</p>
+        <div class="art-card tilt-right" data-title="Grainy Gradient" data-desc="Medium: Adobe Photoshop | 2026">
+          <div class="washi-tape tape-blue"></div>
+          <img src="https://via.placeholder.com/350x480/e6f0ff/333333?text=Artwork+2" alt="Artwork 2">
+          <div class="card-info">
+            <h3 class="handwritten">Gradient Concept</h3>
+            <p>Graphic Design</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Scrapbook Item 3 -->
-    <div class="art-card draggable tilt-left-small" data-title="Graphic Collage" data-desc="Medium: Adobe Photoshop | 2026">
-      <div class="washi-tape tape-blue"></div>
-      <img src="https://via.placeholder.com/350x480/e6f0ff/333333?text=Artwork+3" alt="Artwork 3">
-      <div class="card-info">
-        <h3 class="handwritten">Grainy Gradient Concept</h3>
-        <p>Graphic Design • 2026</p>
+    <!-- PAGE 2: Traditional & Textile Art -->
+    <section class="notebook-page" id="page-2">
+      <div class="page-header">
+        <h2 class="handwritten">Volume II: Traditional & Fabric</h2>
       </div>
-    </div>
-
-    <!-- Sticker Accent Element -->
-    <div class="scrapbook-sticker draggable tilt-right-small">
-      <span class="sticker-text">✨ Favorite Work!</span>
-    </div>
+      <div class="page-grid">
+        <div class="art-card tilt-right-small" data-title="Fabric Saree Painting" data-desc="Medium: Soft Body Paint | 2026">
+          <div class="washi-tape tape-yellow"></div>
+          <img src="https://via.placeholder.com/350x350/fff4cc/333333?text=Artwork+3" alt="Artwork 3">
+          <div class="card-info">
+            <h3 class="handwritten">Floral Saree Detail</h3>
+            <p>Acrylic & Fabric</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- About inside the notebook back page -->
+      <div class="about-note">
+        <h3 class="handwritten">About the Creator</h3>
+        <p>Exploring the intersection of digital computer science concepts and traditional hands-on art media.</p>
+      </div>
+    </section>
 
   </main>
 
-  <!-- Modal Lightbox for Viewing Large Images -->
+  <!-- Modal Lightbox -->
   <div id="art-modal" class="modal">
     <span class="close-btn">&times;</span>
     <img class="modal-content" id="modal-img" alt="Enlarged Art">
     <div id="modal-caption"></div>
   </div>
 
-  <!-- About Section -->
-  <section id="about" class="about-section paper-note">
-    <div class="pin">📌</div>
-    <h2 class="handwritten">About the Artist</h2>
-    <p>Welcome to my interactive digital scrapbook! I love experimenting with digital artwork, traditional fabric paint, soft colors, and graphical compositions.</p>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact" class="footer">
-    <p>Get in touch: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-    <p>&copy; 2026 Personal Artbook. Made with Scraply Vibe.</p>
+  <footer class="footer">
+    <p>&copy; 2026 Art Sketchbook • Built with GitHub Pages</p>
   </footer>
 
   <script src="script.js"></script>
