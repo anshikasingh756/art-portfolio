@@ -3,12 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sketchbook - Paper App Style</title>
-
-  <!-- Minimalist Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Sketchbook</title>
 
   <style>
     * {
@@ -18,30 +13,24 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #12141c; /* Paper app dark navy background */
+      background-color: #12141c; /* Midnight blue background */
       color: #f0f4f8;
       height: 100vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       user-select: none;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* Top App Header */
+    /* Top Minimalist Header */
     .app-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 2.5rem;
+      padding: 1.5rem 2.5rem;
       background: transparent;
       z-index: 100;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
     }
 
     .icon-btn {
@@ -55,48 +44,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.2s;
     }
 
     .icon-btn:hover {
       background: rgba(255, 255, 255, 0.15);
-      transform: scale(1.05);
     }
 
     .icon-btn.hidden {
       display: none;
     }
 
-    .header-title-box {
-      text-align: center;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .header-title-box h1 {
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #ffffff;
-      letter-spacing: 0.03em;
-    }
-
-    .header-title-box span {
-      font-size: 0.72rem;
-      color: #8c9cb8;
-      letter-spacing: 0.05em;
-    }
-
-    /* VIEW 1: COVER SHELF / CAROUSEL (Matching Video 00:00) */
+    /* VIEW 1: Carousel Shelf */
     .shelf-view {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
       perspective: 1500px;
-      overflow: hidden;
     }
 
     .shelf-view.hidden {
@@ -108,50 +74,35 @@
       gap: 3rem;
       align-items: center;
       transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      padding: 2rem;
     }
 
-    .sketchbook-cover-card {
-      width: 250px;
-      height: 350px;
-      background: #1e222d;
-      border-radius: 6px;
+    /* Blank Minimalist Covers */
+    .sketchbook-cover {
+      width: 240px;
+      height: 340px;
+      border-radius: 4px;
       cursor: pointer;
       position: relative;
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
       border-left: 10px solid rgba(0, 0, 0, 0.3); /* Spine shadow */
       transition: transform 0.4s ease, filter 0.4s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 2rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .sketchbook-cover-card:hover {
+    .sketchbook-cover:hover {
       transform: translateY(-10px) scale(1.03);
       filter: brightness(1.15);
     }
 
-    .cover-icon {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.4);
-    }
+    .cover-dark { background: #1a1c23; }
+    .cover-warm { background: #25201e; }
+    .cover-blue { background: #192231; }
 
-    .cover-title-text {
-      font-size: 1.25rem;
-      font-weight: 500;
-      color: #ffffff;
-    }
-
-    /* Carousel Pagination Dots (Matching Video 00:00) */
+    /* Pagination Dots */
     .shelf-dots {
       display: flex;
       gap: 0.6rem;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
 
     .dot {
@@ -167,25 +118,28 @@
       background: #ffffff;
     }
 
-    /* VIEW 2: OPEN JOURNAL 3D SPREAD VIEWER (Matching Video 00:01+) */
+    /* VIEW 2: A5 Open Notebook Spread Viewer */
     .viewer-view {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       perspective: 2500px;
-      position: relative;
     }
 
     .viewer-view.hidden {
       display: none;
     }
 
+    /* A5 Open Book Proportions (Width: ~840px, Height: ~580px) */
     .book-stage {
-      width: 880px;
-      height: 540px;
+      width: 840px;
+      height: 570px;
       position: relative;
       transform-style: preserve-3d;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+      background: #dfded9;
+      border-radius: 4px;
     }
 
     .book-3d {
@@ -195,7 +149,7 @@
       transform-style: preserve-3d;
     }
 
-    /* 3D Page Leaf (Double-page spread simulation) */
+    /* 3D Double-Page Spread Leaf */
     .page-leaf {
       position: absolute;
       width: 100%;
@@ -212,22 +166,38 @@
 
     .page-side {
       position: absolute;
-      width: 100%;
+      width: 50%;
       height: 100%;
       backface-visibility: hidden;
-      background-color: #faf9f6; /* Clean paper white */
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-      border-radius: 4px;
+      background-color: #faf9f6; /* Clean drawing paper white */
+      top: 0;
       overflow: hidden;
     }
 
-    .page-side.back {
-      transform: rotateY(180deg);
-      background-color: #f2f0eb;
+    .page-side.left {
+      left: 0;
+      border-right: 1px solid #e0dfdc;
+      box-shadow: inset -12px 0 20px rgba(0,0,0,0.03); /* Center binding shadow */
     }
 
-    /* Spread Image Slot (Fills the entire open journal spread seamlessly) */
-    .spread-slot {
+    .page-side.right {
+      right: 0;
+      box-shadow: inset 12px 0 20px rgba(0,0,0,0.03); /* Center binding shadow */
+    }
+
+    .page-side.back-left {
+      left: 0;
+      transform: rotateY(180deg);
+      border-right: 1px solid #e0dfdc;
+    }
+
+    .page-side.back-right {
+      right: 0;
+      transform: rotateY(180deg);
+    }
+
+    /* Full-Page Drawing Slots */
+    .page-slot {
       width: 100%;
       height: 100%;
       display: flex;
@@ -236,7 +206,7 @@
       cursor: pointer;
     }
 
-    .spread-slot img {
+    .page-slot img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -248,7 +218,7 @@
       justify-content: center;
       align-items: center;
       gap: 1.5rem;
-      padding: 1.5rem;
+      padding: 1.2rem;
       background: transparent;
       z-index: 100;
     }
@@ -308,44 +278,21 @@
 </head>
 <body>
 
-  <!-- Top App Header -->
+  <!-- Top Header -->
   <header class="app-header">
-    <div class="header-left">
-      <button class="icon-btn hidden" id="back-btn" title="Back to Shelf">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      </button>
-    </div>
-    <div class="header-title-box">
-      <h1 id="header-title">sketchbook</h1>
-      <span id="page-counter">3 Spreads</span>
-    </div>
+    <button class="icon-btn hidden" id="back-btn" title="Back to Shelf">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
   </header>
 
-  <!-- VIEW 1: Shelf Carousel (Matching Video 00:00) -->
+  <!-- VIEW 1: Shelf Carousel -->
   <section id="shelf-view" class="shelf-view">
     <div class="shelf-container" id="shelf-carousel">
-      
-      <!-- Sketchbook 1 -->
-      <div class="sketchbook-cover-card" data-book="0" style="background: #1a1c23;">
-        <div class="cover-icon">⚡</div>
-        <div class="cover-title-text">Journal</div>
-      </div>
-
-      <!-- Sketchbook 2 -->
-      <div class="sketchbook-cover-card" data-book="1" style="background: #2b2523;">
-        <div class="cover-icon">🎨</div>
-        <div class="cover-title-text">Portraits & Studies</div>
-      </div>
-
-      <!-- Sketchbook 3 -->
-      <div class="sketchbook-cover-card" data-book="2" style="background: #1e2638;">
-        <div class="cover-icon">✨</div>
-        <div class="cover-title-text">Illustrations</div>
-      </div>
-
+      <div class="sketchbook-cover cover-dark" data-book="0"></div>
+      <div class="sketchbook-cover cover-warm" data-book="1"></div>
+      <div class="sketchbook-cover cover-blue" data-book="2"></div>
     </div>
-
-    <!-- Pagination Dots -->
+    
     <div class="shelf-dots" id="shelf-dots">
       <div class="dot active" data-index="0"></div>
       <div class="dot" data-index="1"></div>
@@ -353,20 +300,21 @@
     </div>
   </section>
 
-  <!-- VIEW 2: Open Journal Spread Viewer (Matching Video 00:01+) -->
+  <!-- VIEW 2: Open Notebook Viewer -->
   <main id="viewer-view" class="viewer-view hidden">
     <div class="book-stage">
       <div class="book-3d" id="book-3d">
         
         <!-- 
-          ⭐ ADD ANY AMOUNT OF SPREADS/PAGES YOU WANT BELOW! ⭐
-          Each element represents an open journal spread image (like the artwork spreads in the video).
-        --><div class="spread-item"><img src="images/my-drawing-3.jpg" alt="Spread 3"></div>
-        <div class="spread-item"><img src="https://via.placeholder.com/1200x800/e2e8f0/12141c?text=Spread+1:+Lovers+Art" alt="Spread 1"></div>
-        <div class="spread-item"><img src="https://via.placeholder.com/1200x800/cbd5e1/12141c?text=Spread+2:+Fish+and+Hand+Sketch" alt="Spread 2"></div>
-        <div class="spread-item"><img src="https://via.placeholder.com/1200x800/94a3b8/12141c?text=Spread+3:+Galloping+Horses" alt="Spread 3"></div>
-        <!-- To add more, simply duplicate the line below: -->
-        <!-- <div class="spread-item"><img src="your-image-url.jpg" alt="Spread 4"></div> -->
+          ⭐ ADD ANY AMOUNT OF PAGES YOU WANT HERE! ⭐
+          Every 2 pages form a complete open notebook spread (Left page & Right page).
+        -->
+        <div class="page"><img src="https://via.placeholder.com/600x850/ffffff/12141c?text=Page+1" alt="Page 1"></div>
+        <div class="page"><img src="https://via.placeholder.com/600x850/f7f6f2/12141c?text=Page+2" alt="Page 2"></div>
+        <div class="page"><img src="https://via.placeholder.com/600x850/ffffff/12141c?text=Page+3" alt="Page 3"></div>
+        <div class="page"><img src="https://via.placeholder.com/600x850/f7f6f2/12141c?text=Page+4" alt="Page 4"></div>
+        <!-- To add more pages, simply add: -->
+        <!-- <div class="page"><img src="your-image.jpg" alt="Page"></div> -->
 
       </div>
     </div>
@@ -374,28 +322,22 @@
 
   <!-- Bottom Navigation Dock -->
   <nav class="app-dock hidden" id="viewer-dock">
-    <button class="dock-btn" id="prev-btn" title="Previous Spread">
+    <button class="dock-btn" id="prev-btn" title="Previous Page">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
-    <button class="dock-btn" id="next-btn" title="Next Spread">
+    <button class="dock-btn" id="next-btn" title="Next Page">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
     </button>
   </nav>
 
-  <!-- Fullscreen Modal Viewer -->
+  <!-- Fullscreen Modal -->
   <div id="image-modal" class="modal-overlay">
     <span class="close-modal">&times;</span>
-    <img id="modal-img" src="" alt="Enlarged Spread">
+    <img id="modal-img" src="" alt="Enlarged Art">
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-      const booksMetadata = [
-        { title: "Journal" },
-        { title: "Portraits & Studies" },
-        { title: "Illustrations" }
-      ];
 
       let currentLeafIdx = 0;
       let totalLeaves = 0;
@@ -404,22 +346,16 @@
       const viewerView = document.getElementById('viewer-view');
       const viewerDock = document.getElementById('viewer-dock');
       const backBtn = document.getElementById('back-btn');
-      const headerTitle = document.getElementById('header-title');
-      const pageCounter = document.getElementById('page-counter');
       const book3d = document.getElementById('book-3d');
       const nextBtn = document.getElementById('next-btn');
       const prevBtn = document.getElementById('prev-btn');
       const shelfCarousel = document.getElementById('shelf-carousel');
       const dots = document.querySelectorAll('.dot');
 
-      // 1. Open Book from Shelf Carousel
-      document.querySelectorAll('.sketchbook-cover-card').forEach(card => {
+      // Open Sketchbook
+      document.querySelectorAll('.sketchbook-cover').forEach(card => {
         card.addEventListener('click', () => {
-          const bookIdx = parseInt(card.getAttribute('data-book'));
-          headerTitle.textContent = booksMetadata[bookIdx].title;
-
-          buildJournalSpreads();
-
+          buildNotebookSpreads();
           shelfView.classList.add('hidden');
           viewerView.classList.remove('hidden');
           viewerDock.classList.remove('hidden');
@@ -427,28 +363,61 @@
         });
       });
 
-      // 2. Build 3D Pages from HTML items
-      function buildJournalSpreads() {
-        const rawSpreads = Array.from(book3d.querySelectorAll('.spread-item'));
+      // Build 3D Notebook Spreads from HTML elements
+      function buildNotebookSpreads() {
+        const rawPages = Array.from(book3d.querySelectorAll('.page'));
         book3d.innerHTML = '';
 
-        totalLeaves = rawSpreads.length;
-        pageCounter.textContent = `${totalLeaves} Spreads`;
+        // Each leaf consists of 2 pages (Left & Right when open)
+        totalLeaves = Math.ceil(rawPages.length / 2);
 
         for (let i = 0; i < totalLeaves; i++) {
           const leaf = document.createElement('div');
           leaf.className = 'page-leaf';
           leaf.style.zIndex = totalLeaves - i;
 
-          const content = rawSpreads[i] ? rawSpreads[i].innerHTML : '';
+          const leftContent = rawPages[i * 2] ? rawPages[i * 2].innerHTML : '';
+          const rightContent = rawPages[i * 2 + 1] ? rawPages[i * 2 + 1].innerHTML : '';
 
           leaf.innerHTML = `
-            <div class="page-side front">
-              ${content ? `<div class="spread-slot">${content}</div>` : ''}
+            <div class="page-side left">
+              ${leftContent ? `<div class="page-slot">${leftContent}</div>` : ''}
             </div>
-            <div class="page-side back">
-              <div class="spread-slot" style="background: #e6e4df;"></div>
+            <div class="page-side right">
+              ${rightContent ? `<div class="page-slot">${rightContent}</div>` : ''}
             </div>
+            <div class="page-side back-left"></div>
+            <div class="page-side back-right">
+              <!-- Back sides of turning pages can hold subsequent left pages if needed, structured for notebook flow -->
+            </div>
+          `;
+
+          book3d.appendChild(leaf);
+        }
+
+        // Refined multi-leaf sequential layout for notebook turning
+        rebuildSpreadDom(rawPages);
+      }
+
+      function rebuildSpreadDom(rawPages) {
+        book3d.innerHTML = '';
+        totalLeaves = Math.ceil(rawPages.length / 2);
+
+        for (let i = 0; i < totalLeaves; i++) {
+          const leaf = document.createElement('div');
+          leaf.className = 'page-leaf';
+          leaf.style.zIndex = totalLeaves - i;
+
+          const frontLeft = rawPages[i * 2] ? rawPages[i * 2].innerHTML : '';
+          const frontRight = rawPages[i * 2 + 1] ? rawPages[i * 2 + 1].innerHTML : '';
+          const backLeft = rawPages[(i + 1) * 2] ? rawPages[(i + 1) * 2].innerHTML : '';
+          const backRight = rawPages[(i + 1) * 2 + 1] ? rawPages[(i + 1) * 2 + 1].innerHTML : '';
+
+          leaf.innerHTML = `
+            <div class="page-side left"><div class="page-slot">${frontLeft}</div></div>
+            <div class="page-side right"><div class="page-slot">${frontRight}</div></div>
+            <div class="page-side back-left"><div class="page-slot">${backLeft}</div></div>
+            <div class="page-side back-right"><div class="page-slot">${backRight}</div></div>
           `;
 
           book3d.appendChild(leaf);
@@ -472,9 +441,8 @@
         });
       }
 
-      // Navigation
       nextBtn.addEventListener('click', () => {
-        if (currentLeafIdx < totalLeaves) {
+        if (currentLeafIdx < totalLeaves - 1) {
           currentLeafIdx++;
           updatePageFlips();
         }
@@ -487,22 +455,19 @@
         }
       });
 
-      // Back to Shelf
       backBtn.addEventListener('click', () => {
         viewerView.classList.add('hidden');
         viewerDock.classList.add('hidden');
         backBtn.classList.add('hidden');
         shelfView.classList.remove('hidden');
-        headerTitle.textContent = "sketchbook";
-        pageCounter.textContent = "3 Spreads";
       });
 
-      // Shelf Dots Interaction
+      // Carousel Dots
       dots.forEach((dot, idx) => {
         dot.addEventListener('click', () => {
           dots.forEach(d => d.classList.remove('active'));
           dot.classList.add('active');
-          shelfCarousel.style.transform = `translateX(-${idx * 280}px)`;
+          shelfCarousel.style.transform = `translateX(-${idx * 270}px)`;
         });
       });
 
@@ -521,7 +486,7 @@
       const closeModal = document.querySelector('.close-modal');
 
       function bindModals() {
-        document.querySelectorAll('.spread-slot img').forEach(img => {
+        document.querySelectorAll('.page-slot img').forEach(img => {
           img.addEventListener('click', (e) => {
             e.stopPropagation();
             modal.style.display = 'flex';
