@@ -1,60 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const pages = document.querySelectorAll('.sketchbook-page');
-  const nextBtn = document.getElementById('next-page-btn');
-  const prevBtn = document.getElementById('prev-page-btn');
+  const pages = document.querySelectorAll('.page');
+  const nextBtn = document.getElementById('next-btn');
+  const prevBtn = document.getElementById('prev-btn');
   const pageCounter = document.getElementById('page-counter');
   
-  let currentIndex = 0;
+  let currentIdx = 0;
   const totalPages = pages.length;
 
-  function showPage(index) {
-    pages.forEach((page, i) => {
-      if (i === index) {
+  function updateSketchbook() {
+    pages.forEach((page, idx) => {
+      if (idx === currentIdx) {
         page.classList.add('active');
       } else {
         page.classList.remove('active');
       }
     });
-    pageCounter.textContent = `Page ${index + 1} of ${totalPages} Spreads`;
+    pageCounter.textContent = `Page ${currentIdx + 1} of ${totalPages}`;
   }
 
   nextBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % totalPages;
-    showPage(currentIndex);
+    if (currentIdx < totalPages - 1) {
+      currentIdx++;
+      updateSketchbook();
+    } else {
+      currentIdx = 0; // Loop back to start
+      updateSketchbook();
+    }
   });
 
   prevBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + totalPages) % totalPages;
-    showPage(currentIndex);
+    if (currentIdx > 0) {
+      currentIdx--;
+      updateSketchbook();
+    } else {
+      currentIdx = totalPages - 1; // Loop to end
+      updateSketchbook();
+    }
   });
 
-  // Lightbox Modal
-  const modal = document.getElementById('modal');
-  const modalImg = document.getElementById('modal-img');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDesc = document.getElementById('modal-desc');
-  const closeModal = document.querySelector('.close-modal');
+  // Lightbox View Logic
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxDesc = document.getElementById('lightbox-desc');
+  const closeLightbox = document.querySelector('.close-lightbox');
 
-  document.querySelectorAll('.art-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      const title = item.getAttribute('data-title');
-      const desc = item.getAttribute('data-desc');
+  document.querySelectorAll('.art-card').forEach(card => {
+    const img = card.querySelector('img');
+    if (!img) return; // Skip text-only notes
 
-      modal.style.display = 'flex';
-      modalImg.src = img.src;
-      modalTitle.textContent = title;
-      modalDesc.textContent = desc;
+    card.addEventListener('click', () => {
+      const title = card.getAttribute('data-title') || 'Artwork';
+      const desc = card.getAttribute('data-desc') || '';
+
+      lightbox.style.display = 'flex';
+      lightboxImg.src = img.src;
+      lightboxTitle.textContent = title;
+      lightboxDesc.textContent = desc;
     });
   });
 
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
+  closeLightbox.addEventListener('click', () => {
+    lightbox.style.display = 'none';
   });
 
   window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
+    if (e.target === lightbox) {
+      lightbox.style.display = 'none';
     }
   });
+
+  updateSketchbook();
 });
