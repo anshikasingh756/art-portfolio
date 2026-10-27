@@ -1,44 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const pages = document.querySelectorAll('.page');
+  const pageLeaves = document.querySelectorAll('.page-leaf');
   const nextBtn = document.getElementById('next-btn');
   const prevBtn = document.getElementById('prev-btn');
   const pageCounter = document.getElementById('page-counter');
-  
-  let currentIdx = 0;
-  const totalPages = pages.length;
 
-  function updateSketchbook() {
-    pages.forEach((page, idx) => {
-      if (idx === currentIdx) {
-        page.classList.add('active');
+  let currentLeaf = 0;
+  const totalLeaves = pageLeaves.length;
+
+  function updatePageFlips() {
+    pageLeaves.forEach((leaf, idx) => {
+      if (idx < currentLeaf) {
+        leaf.classList.add('flipped');
+        leaf.style.zIndex = idx + 1;
       } else {
-        page.classList.remove('active');
+        leaf.classList.remove('flipped');
+        leaf.style.zIndex = totalLeaves - idx;
       }
     });
-    pageCounter.textContent = `Page ${currentIdx + 1} of ${totalPages}`;
+
+    const activePageNum = currentLeaf + 1;
+    pageCounter.textContent = `Page ${activePageNum} of ${totalLeaves}`;
   }
 
   nextBtn.addEventListener('click', () => {
-    if (currentIdx < totalPages - 1) {
-      currentIdx++;
-      updateSketchbook();
+    if (currentLeaf < totalLeaves) {
+      currentLeaf++;
+      updatePageFlips();
     } else {
-      currentIdx = 0; // Loop back to start
-      updateSketchbook();
+      currentLeaf = 0; // Loop to start
+      updatePageFlips();
     }
   });
 
   prevBtn.addEventListener('click', () => {
-    if (currentIdx > 0) {
-      currentIdx--;
-      updateSketchbook();
+    if (currentLeaf > 0) {
+      currentLeaf--;
+      updatePageFlips();
     } else {
-      currentIdx = totalPages - 1; // Loop to end
-      updateSketchbook();
+      currentLeaf = totalLeaves; // Loop to end
+      updatePageFlips();
     }
   });
 
-  // Lightbox View Logic
+  // Lightbox Modal
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxTitle = document.getElementById('lightbox-title');
@@ -47,9 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.art-card').forEach(card => {
     const img = card.querySelector('img');
-    if (!img) return; // Skip text-only notes
+    if (!img) return;
 
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
       const title = card.getAttribute('data-title') || 'Artwork';
       const desc = card.getAttribute('data-desc') || '';
 
@@ -70,5 +75,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  updateSketchbook();
+  updatePageFlips();
 });

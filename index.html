@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paper Sketchbook</title>
 
-  <!-- Authentic Handwritten Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
@@ -29,70 +29,85 @@
     </div>
   </header>
 
-  <!-- Interactive Sketchbook Spread -->
-  <main class="sketchbook-workspace">
-    <div class="book" id="sketchbook">
+  <!-- 3D Book Stage -->
+  <main class="sketchbook-stage">
+    <div class="book-container" id="book">
       
-      <!-- Page 1 -->
-      <div class="page" data-page="1">
-        <div class="page-content">
-          <div class="art-card tilt-left" data-title="Crown Frog & Friends" data-desc="Characters & Little Doodles">
-            <div class="washi-tape tape-pink"></div>
-            <img src="https://via.placeholder.com/400x450/ffe6ea/333333?text=Frog+Concept" alt="Art 1">
-            <p class="sketch-caption">"I don't care!!"</p>
-          </div>
-          <div class="art-card tilt-right" data-title="Summer Popsicle" data-desc="Sticker Sheet Concept">
-            <div class="washi-tape tape-yellow"></div>
-            <img src="https://via.placeholder.com/400x420/fff4cc/333333?text=Popsicle" alt="Art 2">
-            <p class="sketch-caption">"Stay sweet ✨"</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Page 2 -->
-      <div class="page" data-page="2">
-        <div class="page-content">
-          <div class="art-card tilt-right-small" data-title="Green Boy & Leaf" data-desc="Soft Color Illustration">
-            <div class="washi-tape tape-blue"></div>
-            <img src="https://via.placeholder.com/400x450/e6f0ff/333333?text=Green+Boy" alt="Art 3">
-            <p class="sketch-caption">"Do what makes you happy"</p>
-          </div>
-          <div class="art-card tilt-left-small" data-title="Forest Critters" data-desc="Sketchbook Study">
-            <div class="washi-tape tape-pink"></div>
-            <img src="https://via.placeholder.com/400x430/ffe6ea/333333?text=Critters" alt="Art 4">
-            <p class="sketch-caption">"Keep growing 🌱"</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Page 3 -->
-      <div class="page" data-page="3">
-        <div class="page-content">
-          <div class="art-card tilt-left" data-title="Friendly Dragon" data-desc="Creature Design">
-            <div class="washi-tape tape-yellow"></div>
-            <img src="https://via.placeholder.com/400x450/fff4cc/333333?text=Dragon" alt="Art 5">
-            <p class="sketch-caption">"Mythical friends"</p>
-          </div>
-          <div class="art-card tilt-right" data-title="About the Artist" data-desc="Digital Scrapbook Journal">
-            <div class="note-paper">
-              <h3 class="handwritten-title">Hello there! 👋</h3>
-              <p class="note-text">Welcome to my digital sketchbook app. Click any drawing to view it up close, and use the bottom dock to flip pages!</p>
+      <!-- PAGE 1 (Front Cover Spread) -->
+      <div class="page-leaf" id="page-1" style="z-index: 3;">
+        <div class="page-face front-face">
+          <div class="page-content">
+            <div class="art-card tilt-left" data-title="Crown Frog & Friends" data-desc="Characters & Little Doodles">
+              <div class="washi-tape tape-pink"></div>
+              <img src="https://via.placeholder.com/400x450/ffe6ea/333333?text=Frog+Concept" alt="Art 1">
+              <p class="sketch-caption">"I don't care!!"</p>
+            </div>
+            <div class="art-card tilt-right" data-title="Summer Popsicle" data-desc="Sticker Sheet Concept">
+              <div class="washi-tape tape-yellow"></div>
+              <img src="https://via.placeholder.com/400x420/fff4cc/333333?text=Popsicle" alt="Art 2">
+              <p class="sketch-caption">"Stay sweet ✨"</p>
             </div>
           </div>
+        </div>
+        <div class="page-face back-face">
+          <!-- Back of Page 1 -->
+        </div>
+      </div>
+
+      <!-- PAGE 2 -->
+      <div class="page-leaf" id="page-2" style="z-index: 2;">
+        <div class="page-face front-face">
+          <div class="page-content">
+            <div class="art-card tilt-right-small" data-title="Green Boy & Leaf" data-desc="Soft Color Illustration">
+              <div class="washi-tape tape-blue"></div>
+              <img src="https://via.placeholder.com/400x450/e6f0ff/333333?text=Green+Boy" alt="Art 3">
+              <p class="sketch-caption">"Do what makes you happy"</p>
+            </div>
+            <div class="art-card tilt-left-small" data-title="Forest Critters" data-desc="Sketchbook Study">
+              <div class="washi-tape tape-pink"></div>
+              <img src="https://via.placeholder.com/400x430/ffe6ea/333333?text=Critters" alt="Art 4">
+              <p class="sketch-caption">"Keep growing 🌱"</p>
+            </div>
+          </div>
+        </div>
+        <div class="page-face back-face">
+          <!-- Back of Page 2 -->
+        </div>
+      </div>
+
+      <!-- PAGE 3 -->
+      <div class="page-leaf" id="page-3" style="z-index: 1;">
+        <div class="page-face front-face">
+          <div class="page-content">
+            <div class="art-card tilt-left" data-title="Friendly Dragon" data-desc="Creature Design">
+              <div class="washi-tape tape-yellow"></div>
+              <img src="https://via.placeholder.com/400x450/fff4cc/333333?text=Dragon" alt="Art 5">
+              <p class="sketch-caption">"Mythical friends"</p>
+            </div>
+            <div class="art-card tilt-right" data-title="About the Artist" data-desc="Digital Scrapbook Journal">
+              <div class="note-paper">
+                <h3 class="handwritten-title">Hello there! 👋</h3>
+                <p class="note-text">Welcome to my digital sketchbook app. Click any drawing to view it up close, and use the bottom dock to flip pages!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-face back-face">
+          <!-- Back of Page 3 -->
         </div>
       </div>
 
     </div>
   </main>
 
-  <!-- Bottom Floating App Dock -->
+  <!-- Bottom App Dock -->
   <nav class="app-dock">
-    <button class="dock-btn" id="prev-btn" title="Previous Page">⬅️ Prev</button>
+    <button class="dock-btn" id="prev-btn" title="Previous Page">⬅️ Flip Back</button>
     <div class="dock-divider"></div>
-    <button class="dock-btn" id="next-btn" title="Next Page">Next ➡️</button>
+    <button class="dock-btn" id="next-btn" title="Next Page">Flip Next ➡️</button>
   </nav>
 
-  <!-- Lightbox Modal Viewer -->
+  <!-- Lightbox Modal -->
   <div id="lightbox" class="lightbox">
     <span class="close-lightbox">&times;</span>
     <img id="lightbox-img" src="" alt="Enlarged view">
